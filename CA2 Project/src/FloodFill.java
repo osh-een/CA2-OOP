@@ -1,4 +1,3 @@
-package Q4;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
