@@ -1,8 +1,6 @@
-
-
 /**
- *  Your Name:
- *  Class Group:
+ *  Your Name: OLUWADAMILARE DAVID ADEKEYE
+ *  Class Group: SD2B
  */
 public class Question1 {    // Interfaces
     public static void main(String[] args) {
