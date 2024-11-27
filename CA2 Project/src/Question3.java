@@ -1,6 +1,6 @@
 /**
- * Name:
- * Class Group:
+ * Name: OLUWADAMILARE DAVID ADEKEYE
+ * Class Group: SD2B
  */
 import java.io.File;
 import java.io.FileNotFoundException;
