@@ -1,6 +1,6 @@
 /**
- *  Name:
- *  Class Group:
+ *  Name: OLUWADAMILARE DAVID ADEKEYE
+ *  Class Group: SD2B
  */
 import java.util.Scanner;
 import java.util.Stack;
