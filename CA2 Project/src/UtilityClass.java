@@ -28,6 +28,46 @@ public class UtilityClass {
         return input;
     }
 
+    public static double validateDouble(int decimalPlaces) {
+        double input = 0.0;
+        boolean done = false;
+
+        while(!done) {
+            if(scanner.hasNextDouble()) {
+                input = scanner.nextDouble();
+
+                done = true;
+            }
+            else {
+                System.out.println("Please enter a valid double value!");
+                scanner.next();
+            }
+        }
+
+        // 10^decimalPlaces
+        double power = Math.pow(10, decimalPlaces);
+        // multiply the input by 10^decimalPlaces and round it, then divide the rounded int by 10^decimalPlaces again
+        return Math.round(input * power) / power;
+    }
+
+    public static String validatePattern(String pattern, String errorMessage) {
+        String input = "";
+        boolean done = false;
+
+        while(!done) {
+            input = scanner.next();
+
+            if(input.matches(pattern)) {
+                done = true;
+            }
+            else {
+                System.out.println(errorMessage);
+            }
+        }
+
+        return input;
+    }
+
     public static void displayQueueString(Queue<String> queue) {
         int counter = 0;
 
@@ -45,6 +85,12 @@ public class UtilityClass {
         }
         else {
             System.out.println("The queue is empty");
+        }
+    }
+
+    public static void menuOptions(String[] options) {
+        for(int i = 0; i < options.length; i++) {
+            System.out.println(i+1 + ". " + options[i]);
         }
     }
 }
