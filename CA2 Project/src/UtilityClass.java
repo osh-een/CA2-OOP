@@ -28,6 +28,25 @@ public class UtilityClass {
         return input;
     }
 
+    public static int validateInt() {
+        int input = 0;
+        boolean done = false;
+
+        while(!done) {
+            if(scanner.hasNextInt()) {
+                input = scanner.nextInt();
+
+                done = true;
+            }
+            else {
+                System.out.println("Please enter a valid integer!");
+                scanner.next();
+            }
+        }
+
+        return input;
+    }
+
     public static double validateDouble(int decimalPlaces) {
         double input = 0.0;
         boolean done = false;

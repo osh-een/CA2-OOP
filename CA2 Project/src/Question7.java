@@ -6,8 +6,6 @@
 // Take remaining 75 shares from second block: (30-10) * 75 = €750
 // Total gain = €1750
 
-import questions.UtilityClass;
-
 import java.util.*;
 
 public class Question7 {
@@ -139,7 +137,7 @@ public class Question7 {
 
             gain += (sellPrice - currentBlock.getPrice()) * availableSharesToSell;
 
-            // reduce the quantity of chosen block within Block class
+            // reduce the quantity of chosen block within q7andq8.Block class
             currentBlock.sellShares(availableSharesToSell);
             // reduce the share by the amount the user is able to sell for the current block
             sharesToSell -= availableSharesToSell;
