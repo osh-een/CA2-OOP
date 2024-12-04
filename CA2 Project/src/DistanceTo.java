@@ -1,5 +1,3 @@
-package Q11;
-
 public class DistanceTo implements Comparable<DistanceTo> {
     private String target;
     private int distance;
