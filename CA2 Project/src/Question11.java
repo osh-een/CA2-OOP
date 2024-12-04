@@ -32,8 +32,6 @@
 //  The starting point is the first city in the first line. Print the shortest distances to all other
 //  cities
 
-package Q11;
-
 import java.util.*;
 
 class Question11 {
