@@ -1,24 +1,29 @@
-
+package Q11;
 
 public class DistanceTo implements Comparable<DistanceTo> {
     private String target;
     private int distance;
 
-    public DistanceTo(String city, int dist)
-    {
+    public DistanceTo(String city, int dist) {
         target = city;
         distance = dist;
     }
-    public String getTarget()
-    {
+
+    public String getTarget() {
         return target;
     }
-    public int getDistance()
-    {
+
+    public int getDistance() {
         return distance;
     }
-    public int compareTo(DistanceTo other)
-    {
+
+    public int compareTo(DistanceTo other) {
         return distance - other.distance;
+    }
+
+    @Override
+    public String toString() {
+        // Provide a custom string representation for the object
+        return "Target: " + target + ", Distance: " + distance;
     }
 }
