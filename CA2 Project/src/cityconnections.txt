@@ -10,5 +10,6 @@ Phoenix Pensacola   5
 Peoria  Pittsburgh  5
 Pittsburgh  Princeton   2
 Pittsburgh  Pensacola   4
+Pensacola   Princeton   5
 Princeton   Pittsburgh  2
 Princeton   Pensacola   5
