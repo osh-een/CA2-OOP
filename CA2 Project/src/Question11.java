@@ -25,20 +25,16 @@ public class Question11 {
     
     public static void menuOptions() {
         String[] options = {
-                "View map",
                 "Start algorithm",
                 "Quit application"
         };
         
         UtilityClass.menuOptions(options);
 
-        System.out.println("Please choose one of the above options (1-3)");
-        int choice = UtilityClass.validateInt();
+        System.out.println("Please choose one of the above options (1-2)");
+        int choice = UtilityClass.validateRange(1, 2);
 
         if(choice == 1) {
-            seeMap(connectionsMap);
-        }
-        else if(choice == 2) {
             startAlgorithm();
         }
         else {
@@ -52,22 +48,6 @@ public class Question11 {
 
         System.out.println("Where would you like to travel to?");
         String destination = validateCity();
-    }
-
-    public static void seeMap(Map<String, TreeSet<DistanceTo>> connectionsMap) {
-        for(Map.Entry<String, TreeSet<DistanceTo>> connections : connectionsMap.entrySet()) {
-            String city = connections.getKey();
-            TreeSet<DistanceTo> connectedCityDetails = connections.getValue();
-
-            System.out.println(city+ "Routes:");
-            for(DistanceTo details : connectedCityDetails) {
-                System.out.println(details.getTarget()+ ", " +details.getDistance()+ "km away");
-            }
-
-            System.out.println();
-        }
-
-        menuOptions();
     }
 
     public static void addAllConnectionsFromFile() {
