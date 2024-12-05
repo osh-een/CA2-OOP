@@ -13,10 +13,12 @@ import java.util.TreeSet;
 public class Question11 {
 
     static Scanner scanner = new Scanner(System.in);
+    static Map<String, TreeSet<DistanceTo>> connectionsMap = new HashMap<>();
 
     public static void main(String[] args) {
         System.out.println("SHORTEST DISTANCE ALGORITHM (DIJKSTRA)");
-        startAlgorithm();
+        addAllConnectionsFromFile(connectionsMap);
+        menuOptions();
     }
     
     public static void menuOptions() {
@@ -26,14 +28,23 @@ public class Question11 {
                 "3. Quit application"
         };
         
-        UtilityClass.menuOptions()
+        UtilityClass.menuOptions(options);
+
         System.out.println("Please choose one of the above options (1-3)");
+        int choice = UtilityClass.validateInt();
+
+        if(choice == 1) {
+            // code...
+        }
+        else if(choice == 2) {
+            startAlgorithm();
+        }
+        else {
+            System.out.println("Ending session...\nDone! Goodbye.");
+        }
     }
 
     public static void startAlgorithm() {
-        Map<String, TreeSet<DistanceTo>> connectionsMap = new HashMap<>();
-        addAllConnectionsFromFile(connectionsMap);
-
         System.out.println("Where would you like to travel from?");
         String location = validateCity(connectionsMap);
 
