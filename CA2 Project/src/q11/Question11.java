@@ -1,5 +1,7 @@
 package q11;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,7 +23,7 @@ public class Question11 {
 
     public static void startAlgorithm() {
         Map<String, TreeSet<DistanceTo>> connectionsMap = new HashMap<>();
-        addAllConnections(connectionsMap);
+        addAllConnectionsFromFile(connectionsMap);
 
         System.out.println("Where would you like to travel from?");
         String location = validateCity(connectionsMap);
@@ -30,42 +32,28 @@ public class Question11 {
         String destination = validateCity(connectionsMap);
     }
 
-    public static void addAllConnections(Map<String, TreeSet<DistanceTo>> connectionsMap) {
-        // All the Pendleton connections
-        connectionsMap.put("Pendleton", new TreeSet<>());
-        connectionsMap.get("Pendleton").add(new DistanceTo("Pierre", 2));
-        connectionsMap.get("Pendleton").add(new DistanceTo("Pueblo", 8));
-        connectionsMap.get("Pendleton").add(new DistanceTo("Phoenix", 4));
+    public static void addAllConnectionsFromFile(Map<String, TreeSet<DistanceTo>> connectionsMap) {
+        try {
+            File file = new File("/Users/user/Documents/GitHub/CA2-OOP/CA2 Project/src/q11/cityconnections.txt");
+            Scanner fileScanner = new Scanner(file);
 
-        // And so on...
-        connectionsMap.put("Pierre", new TreeSet<>());
-        connectionsMap.get("Pierre").add(new DistanceTo("Pueblo", 3));
+            while(fileScanner.hasNext()) {
+                String city = fileScanner.next();
+                String connectedCity = fileScanner.next();
+                int distance = fileScanner.nextInt();
 
-        // And so on...
-        connectionsMap.put("Pueblo", new TreeSet<>());
-        connectionsMap.get("Pueblo").add(new DistanceTo("Peoria", 3));
-        connectionsMap.get("Pueblo").add(new DistanceTo("Phoenix", 3));
+                // only add the city if it is not yet in connectionsMap
+                if(!connectionsMap.containsKey(city)) {
+                    connectionsMap.put(city, new TreeSet<>());
+                }
 
-        // And so on...
-        connectionsMap.put("Phoenix", new TreeSet<>());
-        connectionsMap.get("Phoenix").add(new DistanceTo("Peoria", 4));
-        connectionsMap.get("Phoenix").add(new DistanceTo("Pittsburgh", 10));
-        connectionsMap.get("Phoenix").add(new DistanceTo("Pensacola", 5));
-
-        // You get the gist
-        connectionsMap.put("Peoria", new TreeSet<>());
-        connectionsMap.get("Peoria").add(new DistanceTo("Pittsburgh", 5));
-
-        connectionsMap.put("Pittsburgh", new TreeSet<>());
-        connectionsMap.get("Pittsburgh").add(new DistanceTo("Princeton", 2));
-        connectionsMap.get("Pittsburgh").add(new DistanceTo("Pensacola", 4));
-
-        connectionsMap.put("Pensacola", new TreeSet<>());
-        connectionsMap.get("Pensacola").add(new DistanceTo("Princeton", 5));
-
-        connectionsMap.put("Princeton", new TreeSet<>());
-        connectionsMap.get("Princeton").add(new DistanceTo("Pittsburgh", 2));
-        connectionsMap.get("Princeton").add(new DistanceTo("Pensacola", 5));
+                // add connectedCity to its corresponding city
+                connectionsMap.get(city).add(new DistanceTo(connectedCity, distance));
+            }
+        }
+        catch(IOException e) {
+            System.out.println("File was not found! Ending session...");
+        }
     }
 
     public static String validateCity(Map<String, TreeSet<DistanceTo>> connectionsMap) {
