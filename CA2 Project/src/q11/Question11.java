@@ -2,6 +2,7 @@ package q11;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeSet;
 
 /**
@@ -9,8 +10,9 @@ import java.util.TreeSet;
  *  Class Group:
  */
 
-public class Question11
-{
+public class Question11 {
+
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("SHORTEST DISTANCE ALGORITHM (DIJKSTRA)");
@@ -19,7 +21,16 @@ public class Question11
 
     public static void startAlgorithm() {
         Map<String, TreeSet<DistanceTo>> connectionsMap = new HashMap<>();
+        addAllConnections(connectionsMap);
 
+        System.out.println("Where would you like to travel from?");
+        String location = validateCity(connectionsMap);
+
+        System.out.println("Where would you like to travel to?");
+        String destination = validateCity(connectionsMap);
+    }
+
+    public static void addAllConnections(Map<String, TreeSet<DistanceTo>> connectionsMap) {
         // All the Pendleton connections
         connectionsMap.put("Pendleton", new TreeSet<>());
         connectionsMap.get("Pendleton").add(new DistanceTo("Pierre", 2));
@@ -55,5 +66,29 @@ public class Question11
         connectionsMap.put("Princeton", new TreeSet<>());
         connectionsMap.get("Princeton").add(new DistanceTo("Pittsburgh", 2));
         connectionsMap.get("Princeton").add(new DistanceTo("Pensacola", 5));
+    }
+
+    public static String validateCity(Map<String, TreeSet<DistanceTo>> connectionsMap) {
+        String input = "";
+        boolean done = false;
+
+        while(!done) {
+            if(scanner.hasNext()) {
+                input = scanner.next();
+
+                if(connectionsMap.get(input) == null) {
+                    System.out.println("That city does not exist! Please enter a different city");
+                }
+                else {
+                    done = true;
+                }
+            }
+            else {
+                System.out.println("Please enter a string value!");
+                scanner.next();
+            }
+        }
+
+        return input;
     }
 }
