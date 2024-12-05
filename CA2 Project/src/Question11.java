@@ -1,18 +1,20 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  *  Name:
  *  Class Group:
  */
 
+// Bugs:
+    // 1. If there are two paths with the same distance, errors happen
+    // 2. Can't backtrack ie. Princeton to Pendleton
+
 public class Question11 {
 
     static Scanner scanner = new Scanner(System.in);
+
     static Map<String, TreeSet<DistanceTo>> connectionsMap = new HashMap<>();
 
     public static void main(String[] args) {
@@ -48,6 +50,39 @@ public class Question11 {
 
         System.out.println("Where would you like to travel to?");
         String destination = validateCity();
+
+        // no matter what, cities with the shortest distance will always be first in the queue
+        PriorityQueue<DistanceTo> distances = new PriorityQueue<>(new DistanceComparator());
+        Map<String, Integer> shortestKnownDistances = new HashMap<>();
+
+        distances.add(new DistanceTo(location, 0));
+
+        while(!distances.isEmpty()) {
+            DistanceTo currentDistanceTo = distances.remove();
+            String currentCity = currentDistanceTo.getTarget();
+            int shortestCurrentDistance = currentDistanceTo.getDistance();
+
+            // puts top element of PriorityQueue as shortest getDistance() have priority
+            shortestKnownDistances.put(currentCity, shortestCurrentDistance);
+
+            // break the code if we're at the intended city (destination)
+            if(currentCity.equals(destination)) {
+                System.out.println("The shortest distance from " +location+ " to " +destination+ " is " +shortestCurrentDistance+ ". Returning to main menu...\n");
+                menuOptions();
+            }
+
+            for(DistanceTo connectedCity : connectionsMap.get(currentCity)) {
+                String neighbour = connectedCity.getTarget();
+                int neighbourDistance = connectedCity.getDistance();
+
+                int newDistance = shortestCurrentDistance + neighbourDistance;
+
+                // only add it to PriorityQueue if the city is not yet in Map or if newDistance is shorter than distance of current neighbour city
+                if (!shortestKnownDistances.containsKey(neighbour) || newDistance < shortestKnownDistances.get(neighbour)) {
+                    distances.add(new DistanceTo(neighbour, newDistance));
+                }
+            }
+        }
     }
 
     public static void addAllConnectionsFromFile() {
