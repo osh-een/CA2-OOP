@@ -20,6 +20,7 @@ public class Question10 {
                 "Start Navigating",
                 "Quit application"
         };
+
         UtilityClass.menuOptions(options);
 
         System.out.println("Choose one of the above options (1-2)");
