@@ -1,9 +1,10 @@
-public class DistanceTo implements Comparable{
+public class DistanceTo implements Comparable<DistanceTo> {
     private String target;
     private int distance;
 
     public DistanceTo(String city, int dist) {
-        target = city; distance = dist;
+        target = city;
+        distance = dist;
     }
 
     public String getTarget() {
@@ -14,12 +15,16 @@ public class DistanceTo implements Comparable{
         return distance;
     }
 
-    public int compareTo(DistanceTo other) {
-        return distance - other.distance;
-    }
-
+    // just so TreeSet ignores duplicates for the seeMap method
     @Override
-    public int compareTo(Object o) {
-        return 0;
+    public int compareTo(DistanceTo other) {
+        int compareDistances = Integer.compare(this.distance, other.distance);
+
+        // If distances are equal, compare by target city name
+        if (compareDistances == 0) {
+            return this.target.compareTo(other.target);
+        }
+
+        return compareDistances;
     }
 }
