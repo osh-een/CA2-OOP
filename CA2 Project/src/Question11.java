@@ -17,15 +17,17 @@ public class Question11 {
 
     public static void main(String[] args) {
         System.out.println("SHORTEST DISTANCE ALGORITHM (DIJKSTRA)");
-        addAllConnectionsFromFile(connectionsMap);
+
+        addAllConnectionsFromFile();
+
         menuOptions();
     }
     
     public static void menuOptions() {
         String[] options = {
-                "1. View map",
-                "2. Start algorithm",
-                "3. Quit application"
+                "View map",
+                "Start algorithm",
+                "Quit application"
         };
         
         UtilityClass.menuOptions(options);
@@ -34,7 +36,7 @@ public class Question11 {
         int choice = UtilityClass.validateInt();
 
         if(choice == 1) {
-            // code...
+            seeMap(connectionsMap);
         }
         else if(choice == 2) {
             startAlgorithm();
@@ -46,15 +48,31 @@ public class Question11 {
 
     public static void startAlgorithm() {
         System.out.println("Where would you like to travel from?");
-        String location = validateCity(connectionsMap);
+        String location = validateCity();
 
         System.out.println("Where would you like to travel to?");
-        String destination = validateCity(connectionsMap);
+        String destination = validateCity();
     }
 
-    public static void addAllConnectionsFromFile(Map<String, TreeSet<DistanceTo>> connectionsMap) {
+    public static void seeMap(Map<String, TreeSet<DistanceTo>> connectionsMap) {
+        for(Map.Entry<String, TreeSet<DistanceTo>> connections : connectionsMap.entrySet()) {
+            String city = connections.getKey();
+            TreeSet<DistanceTo> connectedCityDetails = connections.getValue();
+
+            System.out.println(city+ "Routes:");
+            for(DistanceTo details : connectedCityDetails) {
+                System.out.println(details.getTarget()+ ", " +details.getDistance()+ "km away");
+            }
+
+            System.out.println();
+        }
+
+        menuOptions();
+    }
+
+    public static void addAllConnectionsFromFile() {
         try {
-            File file = new File("/Users/user/Documents/GitHub/CA2-OOP/CA2 Project/src/q11/cityconnections.txt");
+            File file = new File("/Users/user/Documents/GitHub/CA2-OOP/CA2 Project/src/cityconnections.txt");
             Scanner fileScanner = new Scanner(file);
 
             while(fileScanner.hasNext()) {
@@ -72,11 +90,11 @@ public class Question11 {
             }
         }
         catch(IOException e) {
-            System.out.println("File was not found! Ending session...");
+            System.err.println("File was not found! Ending session...");
         }
     }
 
-    public static String validateCity(Map<String, TreeSet<DistanceTo>> connectionsMap) {
+    public static String validateCity() {
         String input = "";
         boolean done = false;
 
