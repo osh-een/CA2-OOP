@@ -15,16 +15,8 @@ public class DistanceTo implements Comparable<DistanceTo> {
         return distance;
     }
 
-    // just so TreeSet ignores duplicates for the seeMap method
     @Override
     public int compareTo(DistanceTo other) {
-        int compareDistances = Integer.compare(this.distance, other.distance);
-
-        // If distances are equal, compare by target city name
-        if (compareDistances == 0) {
-            return this.target.compareTo(other.target);
-        }
-
-        return compareDistances;
+        return distance - other.distance;
     }
 }
