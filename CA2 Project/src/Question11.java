@@ -1,5 +1,3 @@
-package q11;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,6 +17,17 @@ public class Question11 {
     public static void main(String[] args) {
         System.out.println("SHORTEST DISTANCE ALGORITHM (DIJKSTRA)");
         startAlgorithm();
+    }
+    
+    public static void menuOptions() {
+        String[] options = {
+                "1. View map",
+                "2. Start algorithm",
+                "3. Quit application"
+        };
+        
+        UtilityClass.menuOptions()
+        System.out.println("Please choose one of the above options (1-3)");
     }
 
     public static void startAlgorithm() {
