@@ -24,21 +24,21 @@ public class Question2 {
         Stack<Integer> driveway = new Stack<>();
         Stack<Integer> street = new Stack<>();
 
-        while (true) {
+        while(true) {
             System.out.print("\nEnter your action: ");
             int input = UtilityClass.validateInt();
 
             if (input == 0) {
-                System.out.println("Simulation ended.");
+                UtilityClass.endAppMessage();
                 break;
             }
+            // Pushing a car to the driveway stack
             else if (input > 0) {
-                // Add a car to the driveway
                 driveway.push(input);
                 System.out.println("Car " + input + " parked in the driveway.");
             }
+            // Removing a car from the driveway
             else if (input < 0) {
-                // Remove a car from the driveway
                 int carToRetrieve = -input;
                 boolean found = false;
 
