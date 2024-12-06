@@ -35,7 +35,7 @@ public class Question2 {
             // Pushing a car to the driveway stack
             else if (input > 0) {
                 driveway.push(input);
-                System.out.println("Car " + input + " parked in the driveway.");
+                System.out.println("Car with licence number '" + input + "' has been parked in the driveway.");
             }
             // Removing a car from the driveway
             else if (input < 0) {
@@ -46,10 +46,11 @@ public class Question2 {
                 while (!driveway.isEmpty()) {
                     int topCar = driveway.pop();
                     if (topCar == carToRetrieve) {
-                        System.out.println("Car " + carToRetrieve + " retrieved from the driveway.");
+                        System.out.println("Car with licence number '" + carToRetrieve + "' has been retrieved from the driveway.");
                         found = true;
                         break;
-                    } else {
+                    }
+                    else {
                         street.push(topCar);
                     }
                 }
@@ -69,7 +70,17 @@ public class Question2 {
             }
 
             // Print the current state of the driveway
-            System.out.println("Current state of the driveway: " + driveway);
+            displayDriveway(driveway);
+        }
+    }
+
+    public static void displayDriveway(Stack<Integer> driveway) {
+        Stack<Integer> clonedDriveway = (Stack<Integer>) driveway.clone();
+
+        System.out.println("Current cars in the driveway");
+
+        while(!clonedDriveway.isEmpty()) {
+            System.out.println("| " +clonedDriveway.pop()+ " |");
         }
     }
 }
