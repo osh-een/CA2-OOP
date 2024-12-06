@@ -7,24 +7,25 @@ import java.util.Stack;
 
 public class Question2 {
     public static void main(String[] args) {
+        System.out.println("DRIVEWAY PARKING SIMULATOR");
 
         stack();
-
     }
 
     public static void stack() {
+        String[] options = {
+                "Park a car (Enter a licence plate - 1, 2, 3, etc.)",
+                "Retrieve a car (Enter a negative version of licence plate - -1, -2, -3)",
+                "Quit application (Enter 0)"
+        };
+
+        UtilityClass.menuOptions(options);
+
         Stack<Integer> driveway = new Stack<>();
         Stack<Integer> street = new Stack<>();
 
-        System.out.println("Welcome to the Driveway Parking Simulator!");
-
-        System.out.println("1. Enter a positive number (e.g., 1, 2, 3) to park a car.");
-        System.out.println("2. Enter a negative number (e.g., -2) to retrieve a car.");
-        System.out.println("3. Enter '0' to stop the simulation.");
-        System.out.println();
-
         while (true) {
-            System.out.print("Enter your action: ");
+            System.out.print("\nEnter your action: ");
             int input = UtilityClass.validateInt();
 
             if (input == 0) {
