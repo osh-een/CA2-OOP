@@ -36,6 +36,8 @@ public class Question2 {
             else if (input > 0) {
                 driveway.push(input);
                 System.out.println("Car with licence number '" + input + "' has been parked in the driveway.");
+
+                displayCars(driveway, "Driveway");
             }
             // Removing a car from the driveway
             else if (input < 0) {
@@ -45,12 +47,14 @@ public class Question2 {
                 // Move cars to the street until we find the requested car
                 while (!driveway.isEmpty()) {
                     int topCar = driveway.pop();
+
                     if (topCar == carToRetrieve) {
                         System.out.println("Car with licence number '" + carToRetrieve + "' has been retrieved from the driveway.");
                         found = true;
                         break;
                     }
                     else {
+                        System.out.println("Car with plate '" +topCar+ "' is moving onto the street");
                         street.push(topCar);
                     }
                 }
@@ -60,6 +64,9 @@ public class Question2 {
                     System.out.println("Car " + carToRetrieve + " is not in the driveway.");
                 }
 
+                System.out.println("\nThe following cars on the street are now moving back to the driveway");
+                displayCars(street, "Street");
+
                 // Move cars back from the street to the driveway
                 while (!street.isEmpty()) {
                     driveway.push(street.pop());
@@ -68,19 +75,19 @@ public class Question2 {
             else {
                 System.out.println("Invalid input. Please enter a positive number, negative number, or 0.");
             }
-
-            // Print the current state of the driveway
-            displayDriveway(driveway);
         }
     }
 
-    public static void displayDriveway(Stack<Integer> driveway) {
-        Stack<Integer> clonedDriveway = (Stack<Integer>) driveway.clone();
+    public static void displayCars(Stack<Integer> stack, String stackName) {
+        Stack<Integer> clonedDriveway = (Stack<Integer>) stack.clone();
 
-        System.out.println("Current cars in the driveway");
-
-        while(!clonedDriveway.isEmpty()) {
-            System.out.println("| " +clonedDriveway.pop()+ " |");
+        if(clonedDriveway.isEmpty()) {
+            System.out.println("No cars in the " +stackName);
+        }
+        else {
+            while(!clonedDriveway.isEmpty()) {
+                System.out.println("| " +clonedDriveway.pop()+ " |");
+            }
         }
     }
 }
