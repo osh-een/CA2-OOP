@@ -17,15 +17,15 @@ public class Question3 { // Nested HTML (Stack)
      */
 
     public static void main(String[] args) throws FileNotFoundException {
-        // Update the file paths if needed
         String[] files = {"tags_valid.txt", "tags_invalid.txt"};
 
-        // Check the validity of each file
+        // Check if the tags in the given files are valid or not
         for (String fName : files) {
             System.out.print(fName + ": ");
             if (validate(fName)) {
                 System.out.println("This file is valid");
-            } else {
+            } 
+            else {
                 System.out.println("This file is invalid");
             }
         }
@@ -33,53 +33,43 @@ public class Question3 { // Nested HTML (Stack)
 
 
     public static boolean validate(String filename) throws FileNotFoundException {
-        // Define self-closing tags that don't require a closing tag
-        String[] selfClosingTags = {"<br>", "<hr>", "<img>", "<input>", "<link>", "<meta>", "<base>"};
+        // All tags that don't need a corresponding closing tag
+        String[] selfClosingTags = {"<br>", "<hr>", "<img>", "<input>", "<link>", "<meta>"};
 
-        // Create a stack to keep track of opening tags
-        Stack<String> stack = new Stack<>();
+        // Stack of all openingTags that will be found in the file
+        Stack<String> openingTags = new Stack<>();
 
-        // Open the file for reading
-        Scanner sc = new Scanner(new File(filename));
+        Scanner fileScanner = new Scanner(new File(filename));
 
-        // Read all lines in the file
-        while (sc.hasNextLine()) {
-            String line = sc.nextLine().trim();
+        while (fileScanner.hasNextLine()) {
+            String line = fileScanner.nextLine().trim();
 
-            // Split the line into tags by spaces (assuming tags are separated by spaces)
+            // Make an array of the tags from the current line in the file. An item is added after every space
             String[] tags = line.split("\\s+");
 
-            // Process each tag in the line
             for (String tag : tags) {
-                // Ignore empty strings
-                if (tag.isEmpty()) {
-                    continue;
-                }
-
                 // Check if the tag is a closing tag
                 if (tag.startsWith("</")) {
-                    String closingTag = tag;
-
-                    // Check if the stack is not empty and the top of the stack matches the closing tag
-                    if (!stack.isEmpty() && stack.peek().equals(closingTag.replaceAll("</", "<"))) {
-                        stack.pop();  // Pop the matching opening tag from the stack
-                    } else {
-                        // If the stack is empty or the tags don't match, return false (tags are not properly nested)
-                        sc.close();
+                    // Check if the openingTags is not empty and the top of the openingTags matches the closing tag
+                    if (!openingTags.isEmpty() && openingTags.peek().equals("<" +tag+ ">")) {
+                        openingTags.pop();
+                    }
+                    else {
                         return false;
                     }
-                } else if (!isSelfClosingTag(tag, selfClosingTags)) {
-                    // If it's an opening tag and not a self-closing tag, push it onto the stack
-                    stack.push(tag);
+                } 
+                else if (!isSelfClosingTag(tag, selfClosingTags)) {
+                    // Push the new opening tag to the stack
+                    openingTags.push(tag);
                 }
             }
         }
 
         // Close the scanner after reading the file
-        sc.close();
+        fileScanner.close();
 
-        // After processing all tags, if the stack is empty, it means all tags were properly closed
-        return stack.isEmpty();
+        // After processing all tags, if the openingTags is empty, it means all tags were properly closed
+        return openingTags.isEmpty();
     }
 
     // Helper method to check if the tag is self-closing (e.g., <br>, <img>)
