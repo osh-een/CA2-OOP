@@ -51,7 +51,7 @@ public class Question3 { // Nested HTML (Stack)
                 // Check if the tag is a closing tag
                 if (tag.startsWith("</")) {
                     // Check if the openingTags is not empty and the top of the openingTags matches the closing tag
-                    if (!openingTags.isEmpty() && openingTags.peek().equals("<" +tag+ ">")) {
+                    if (!openingTags.isEmpty() && openingTags.peek().equals(tag.replace("</", "<"))) {
                         openingTags.pop();
                     }
                     else {
