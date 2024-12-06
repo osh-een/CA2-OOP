@@ -39,38 +39,37 @@ public class Question10 {
     public static void mazeMenu() {
         Deque<int[]> positions = new ArrayDeque<>();
         Deque<String> directions = new ArrayDeque<>();
-        int row = 3, column = 4;
+        int row = 6, column = 2;
         int[][] mazePosition = createMaze();
 
         // to avoid pushing paths twice from an intersection that happens to be at a dead end
         Deque<String> visitedIntersections = new ArrayDeque<>();
 
-        // Push all possible paths from the starting position [3][4]
-        if(!visitedIntersections.contains(row+ "" +column+ "left")) {
-            visitedIntersections.push(row+ "" +column+ "left");
+        // Push all possible paths from the starting position
+        if(!visitedIntersections.contains(row+ "" +column+ "up")) {
+            visitedIntersections.push(row+ "" +column+ "up");
             positions.push(new int[]{row, column});
-            directions.push(W);
+            directions.push(N);
         }
         if(!visitedIntersections.contains(row+ "" +column+ "right")) {
             visitedIntersections.push(row+ "" +column+ "right");
             positions.push(new int[]{row, column});
             directions.push(E);
         }
-        if(!visitedIntersections.contains(row+ "" +column+ "down")) {
-            visitedIntersections.push(row+ "" +column+ "down");
-            positions.push(new int[]{row, column});
-            directions.push(S);
-        }
-        if(!visitedIntersections.contains(row+ "" +column+ "up")) {
-            visitedIntersections.push(row+ "" +column+ "up");
-            positions.push(new int[]{row, column});
-            directions.push(N);
-        }
 
         while(!exitFound) {
             // re-assign variables every time a dead end is found
-            int[] newRowAndColumn = positions.pop();
-            String directionToMove = directions.pop();
+            int[] newRowAndColumn = new int[2];
+            String directionToMove = "";
+
+            if(!positions.isEmpty() && !directions.isEmpty()) {
+                newRowAndColumn = positions.pop();
+                directionToMove = directions.pop();
+            }
+            else {
+                System.out.println("There are no exits in this maze!\n");
+                menuOptions();
+            }
 
             row = newRowAndColumn[0];
             column = newRowAndColumn[1];
@@ -115,9 +114,8 @@ public class Question10 {
             }
 
             // checks to see if column is equal to either max or min bound of the array. This means we found exit
-            if(column <= 0 || column >= mazePosition[0].length) {
-                System.out.println("Exit found in " +attempts+ "!\n");
-                done = true;
+            if(column <= 0 || column >= mazePosition[0].length - 1) {
+                System.out.println("Exit found in " +attempts+ " attempts!\n");
                 exitFound = true;
             }
 
@@ -165,9 +163,8 @@ public class Question10 {
             }
 
             // checks to see if column is equal to either max or min bound of the array. This means we found exit
-            if(row <= 0 || row >= mazePosition[0].length) {
-                System.out.println("Exit found in " +attempts+ "!\n");
-                done = true;
+            if(row <= 0 || row >= mazePosition[0].length - 1) {
+                System.out.println("Exit found in " +attempts+ " attempts!\n");
                 exitFound = true;
             }
 
@@ -185,7 +182,7 @@ public class Question10 {
         }
     }
 
-    public static int[][] createMaze() {
+    public static int[][] createPDFMaze() {
         return new int[][] {
                 {0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 1, 1, 1, 1, 1, 1, 0},
@@ -194,6 +191,32 @@ public class Question10 {
                 {0, 0, 0, 0, 1, 0, 0, 0},
                 {0, 1, 1, 1, 1, 0, 0, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0}
+        };
+    }
+
+    public static int[][] createMazeWithLoop() {
+        return new int[][] {
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 1, 1, 1, 1, 1, 0},
+                {0, 0, 1, 0, 0, 0, 1, 0},
+                {1, 1, 1, 0, 0, 0, 1, 0},
+                {0, 0, 1, 0, 0, 0, 1, 0},
+                {0, 0, 1, 0, 0, 0, 1, 0},
+                {0, 1, 1, 1, 1, 1, 1, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0}
+        };
+    }
+
+    public static int[][] createMazeWithNoExit() {
+        return new int[][] {
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 1, 1, 1, 0, 1, 0},
+                {0, 1, 0, 1, 0, 1, 1, 0},
+                {0, 0, 0, 1, 0, 1, 0, 0},
+                {0, 1, 1, 1, 1, 1, 1, 0},
+                {0, 0, 0, 1, 0, 0, 1, 0},
+                {0, 1, 1, 1, 0, 1, 1, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0}
         };
     }
