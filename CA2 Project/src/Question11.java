@@ -87,7 +87,7 @@ public class Question11 {
 
     public static void addAllConnectionsFromFile() {
         try {
-            File file = new File("/Users/user/Documents/GitHub/CA2-OOP/CA2 Project/src/cityconnections.txt");
+            File file = new File("cityconnections.txt");
             Scanner fileScanner = new Scanner(file);
 
             while(fileScanner.hasNext()) {
