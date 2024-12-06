@@ -11,6 +11,8 @@ import java.util.*;
     // 1. If there are two paths with the same distance, errors happen
     // 2. Can't backtrack ie. Princeton to Pendleton
 
+// Theos path: /Users/user/Documents/GitHub/CA2-OOP/CA2 Project/src/cityconnections.txt
+
 public class Question11 {
 
     static Scanner scanner = new Scanner(System.in);
