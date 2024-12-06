@@ -112,4 +112,8 @@ public class UtilityClass {
             System.out.println(i+1 + ". " + options[i]);
         }
     }
+
+    public static void endAppMessage() {
+        System.out.println("Ending session...\nDone! Goodbye.");
+    }
 }
