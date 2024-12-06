@@ -40,7 +40,7 @@ public class Question10 {
         Deque<int[]> positions = new ArrayDeque<>();
         Deque<String> directions = new ArrayDeque<>();
         int row = 6, column = 2;
-        int[][] mazePosition = createMaze();
+        int[][] mazePosition = createPDFMaze();
 
         // to avoid pushing paths twice from an intersection that happens to be at a dead end
         Deque<String> visitedIntersections = new ArrayDeque<>();
@@ -223,7 +223,7 @@ public class Question10 {
 
     // parameters act as a way to keep track where the user is moving
     public static void outputMaze(int startingRow, int startingColumn) {
-        int[][] maze = createMaze();
+        int[][] maze = createPDFMaze();
 
         for(int i = 0; i < maze.length; i++) {
             if(i != 0)  {
