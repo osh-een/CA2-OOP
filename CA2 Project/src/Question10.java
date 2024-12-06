@@ -1,5 +1,7 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 // Bug in code: If an intersection happens to be at end of path, the paths will be checked twice at that intersection
 // Plus have to manually give starting directions and position otherwise code breaks
@@ -40,18 +42,30 @@ public class Question10 {
         int row = 3, column = 4;
         int[][] mazePosition = createMaze();
 
+        // to avoid pushing paths twice from an intersection that happens to be at a dead end
+        Deque<String> visitedIntersections = new ArrayDeque<>();
+
         // Push all possible paths from the starting position [3][4]
-        positions.push(new int[]{row, column});
-        directions.push(W);
-
-        positions.push(new int[]{row, column});
-        directions.push(E);
-
-        positions.push(new int[]{row, column});
-        directions.push(N);
-
-        positions.push(new int[]{row, column});
-        directions.push(S);
+        if(!visitedIntersections.contains(row+ "" +column+ "left")) {
+            visitedIntersections.push(row+ "" +column+ "left");
+            positions.push(new int[]{row, column});
+            directions.push(W);
+        }
+        if(!visitedIntersections.contains(row+ "" +column+ "right")) {
+            visitedIntersections.push(row+ "" +column+ "right");
+            positions.push(new int[]{row, column});
+            directions.push(E);
+        }
+        if(!visitedIntersections.contains(row+ "" +column+ "down")) {
+            visitedIntersections.push(row+ "" +column+ "down");
+            positions.push(new int[]{row, column});
+            directions.push(S);
+        }
+        if(!visitedIntersections.contains(row+ "" +column+ "up")) {
+            visitedIntersections.push(row+ "" +column+ "up");
+            positions.push(new int[]{row, column});
+            directions.push(N);
+        }
 
         while(!exitFound) {
             // re-assign variables every time a dead end is found
@@ -62,17 +76,17 @@ public class Question10 {
             column = newRowAndColumn[1];
 
             if(directionToMove.equals("left") || directionToMove.equals("right")) {
-                handleLeftRightMovement(directionToMove, row, column, mazePosition, positions, directions);
+                handleLeftRightMovement(directionToMove, row, column, mazePosition, positions, directions, visitedIntersections);
             }
             else {
-                handleUpDownMovement(directionToMove, row, column, mazePosition, positions, directions);
+                handleUpDownMovement(directionToMove, row, column, mazePosition, positions, directions, visitedIntersections);
             }
         }
 
         menuOptions();
     }
 
-    public static void handleLeftRightMovement(String directionToMove, int row, int column, int[][] mazePosition, Deque<int[]> positions, Deque<String> directions) {
+    public static void handleLeftRightMovement(String directionToMove, int row, int column, int[][] mazePosition, Deque<int[]> positions, Deque<String> directions, Deque<String> visitedIntersections) {
         boolean done = false;
 
         while(!done && !exitFound) {
@@ -102,24 +116,27 @@ public class Question10 {
 
             // checks to see if column is equal to either max or min bound of the array. This means we found exit
             if(column <= 0 || column >= mazePosition[0].length) {
-                System.out.println("Exit found!\n");
+                System.out.println("Exit found in " +attempts+ "!\n");
                 done = true;
                 exitFound = true;
             }
 
-            // as we're moving along, check if there are any paths along the way
-            if(mazePosition[row-1][column] == 1) {
+            // as we're moving along, check if there are any paths along the way and only push it if it's not already in vistedIntersections
+            if(mazePosition[row-1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "up")) {
+                // ie. 34right.
+                visitedIntersections.push(row+ "" +column+ "up");
                 positions.push(new int[] {row, column});
-                directions.push(W);
+                directions.push(N);
             }
-            if(mazePosition[row+1][column] == 1) {
+            if(mazePosition[row+1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "down")) {
+                visitedIntersections.push(row+ "" +column+ "down");
                 positions.push(new int[] {row, column});
-                directions.push(E);
+                directions.push(S);
             }
         }
     }
 
-    public static void handleUpDownMovement(String directionToMove, int row, int column, int[][] mazePosition, Deque<int[]> positions, Deque<String> directions) {
+    public static void handleUpDownMovement(String directionToMove, int row, int column, int[][] mazePosition, Deque<int[]> positions, Deque<String> directions, Deque<String> visitedIntersections) {
         boolean done = false;
 
         while(!done && !exitFound) {
@@ -149,17 +166,19 @@ public class Question10 {
 
             // checks to see if column is equal to either max or min bound of the array. This means we found exit
             if(row <= 0 || row >= mazePosition[0].length) {
-                System.out.println("Exit found!\n");
+                System.out.println("Exit found in " +attempts+ "!\n");
                 done = true;
                 exitFound = true;
             }
 
             // as we're moving along, check if there are any paths along the way
-            if(mazePosition[row][column-1] == 1) {
+            if(mazePosition[row][column-1] == 1 && !visitedIntersections.contains(row+ "" +column+ "left")) {
+                visitedIntersections.push(row+ "" +column+ "left");
                 positions.push(new int[] {row, column});
                 directions.push(W);
             }
-            if(mazePosition[row][column+1] == 1) {
+            if(mazePosition[row][column+1] == 1 && !visitedIntersections.contains(row+ "" +column+ "right")) {
+                visitedIntersections.push(row+ "" +column+ "right");
                 positions.push(new int[] {row, column});
                 directions.push(E);
             }
