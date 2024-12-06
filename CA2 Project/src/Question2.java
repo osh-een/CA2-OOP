@@ -15,7 +15,6 @@ public class Question2 {
     public static void stack() {
         Stack<Integer> driveway = new Stack<>();
         Stack<Integer> street = new Stack<>();
-        Scanner sc = new Scanner(System.in);
 
         System.out.println("Welcome to the Driveway Parking Simulator!");
 
@@ -26,16 +25,18 @@ public class Question2 {
 
         while (true) {
             System.out.print("Enter your action: ");
-            int input = sc.nextInt();
+            int input = UtilityClass.validateInt();
 
             if (input == 0) {
                 System.out.println("Simulation ended.");
                 break;
-            } else if (input > 0) {
+            }
+            else if (input > 0) {
                 // Add a car to the driveway
                 driveway.push(input);
                 System.out.println("Car " + input + " parked in the driveway.");
-            } else if (input < 0) {
+            }
+            else if (input < 0) {
                 // Remove a car from the driveway
                 int carToRetrieve = -input;
                 boolean found = false;
@@ -61,15 +62,14 @@ public class Question2 {
                 while (!street.isEmpty()) {
                     driveway.push(street.pop());
                 }
-            } else {
+            }
+            else {
                 System.out.println("Invalid input. Please enter a positive number, negative number, or 0.");
             }
 
             // Print the current state of the driveway
             System.out.println("Current state of the driveway: " + driveway);
         }
-        
-        sc.close();
     }
 }
 
