@@ -12,7 +12,8 @@ import java.util.*;
     // 2. Can't backtrack ie. Princeton to Pendleton
 
     // pathnames
-    //"C:\\Users\\larem\\Documents\\DKIT\\YEAR 2\\Computer Security\\CA2-OOP\\CA2 Project\\src\\cityconnections.txt"
+    // Thoes path : /Users/user/Documents/GitHub/CA2-OOP/CA2 Project/src/cityconnections.txt
+    // damis path : "C:\\Users\\larem\\Documents\\DKIT\\YEAR 2\\Computer Security\\CA2-OOP\\CA2 Project\\src\\cityconnections.txt"
 
 public class Question11 {
 
