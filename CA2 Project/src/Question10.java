@@ -96,13 +96,13 @@ public class Question10 {
     public static void handleLeftRightMovement(String directionToMove, int row, int column, int[][] mazePosition) {
         boolean done = false;
 
-        while(!done && !exitFound) {
+        while(!exitFound) {
             attempts++;
 
             // moving left
             if(directionToMove.equals("left")) {
                 if(mazePosition[row][column-1] == 0) {
-                    done = true;
+                    break;
                 }
                 else {
                     column--;
@@ -111,7 +111,7 @@ public class Question10 {
             // moving right
             else {
                 if(mazePosition[row][column+1] == 0) {
-                    done = true;
+                    break;
                 }
                 else {
                     column++;
@@ -133,15 +133,13 @@ public class Question10 {
     }
 
     public static void handleUpDownMovement(String directionToMove, int row, int column, int[][] mazePosition) {
-        boolean done = false;
-
-        while(!done && !exitFound) {
+        while(!exitFound) {
             attempts++;
 
             // moving up
             if(directionToMove.equals("up")) {
                 if(mazePosition[row-1][column] == 0) {
-                    done = true;
+                    break;
                 }
                 else {
                     row--;
@@ -150,7 +148,7 @@ public class Question10 {
             // moving down
             else {
                 if(mazePosition[row+1][column] == 0) {
-                    done = true;
+                    break;
                 }
                 else {
                     row++;
