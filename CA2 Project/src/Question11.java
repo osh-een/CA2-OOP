@@ -7,9 +7,10 @@ import java.util.*;
  *  Class Group:
  */
 
-// Bugs:
-    // 1. If there are two paths with the same distance, errors happen
+// Bugs/Errors/Functionality not added:
+    // 1. If there are two paths with the same distance, errors happen ie. Pueblo to Pittsburgh outputs 12
     // 2. Can't backtrack ie. Princeton to Pendleton
+    // 3. Can't display map of the cities and their connections
 
 public class Question11 {
 
@@ -71,15 +72,16 @@ public class Question11 {
                 menuOptions();
             }
 
+            // gets all the cities that are connected to the currentCity. For loop of the tree set with the key of currentCity
             for(DistanceTo connectedCity : connectionsMap.get(currentCity)) {
-                String neighbour = connectedCity.getTarget();
+                String neighbourCity = connectedCity.getTarget();
                 int neighbourDistance = connectedCity.getDistance();
 
                 int newDistance = shortestCurrentDistance + neighbourDistance;
 
                 // only add it to PriorityQueue if the city is not yet in Map or if newDistance is shorter than distance of current neighbour city
-                if (!shortestKnownDistances.containsKey(neighbour) || newDistance < shortestKnownDistances.get(neighbour)) {
-                    distances.add(new DistanceTo(neighbour, newDistance));
+                if (!shortestKnownDistances.containsKey(neighbourCity) || newDistance < shortestKnownDistances.get(neighbourCity)) {
+                    distances.add(new DistanceTo(neighbourCity, newDistance));
                 }
             }
         }
