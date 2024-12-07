@@ -13,7 +13,7 @@ public class Question10 {
     static Deque<int[]> positions = new ArrayDeque<>();
     static Deque<String> directions = new ArrayDeque<>();
     // to avoid pushing paths twice from an intersection that happens to be at a dead end
-    static Deque<String> visitedIntersections = new ArrayDeque<>();
+    static ArrayList<String> visitedIntersections = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("BACKTRACKING ALGORITHM");
@@ -63,27 +63,8 @@ public class Question10 {
         positions.push(new int[]{row, column});
 
         // checking for all possible paths from the user's starting position
-        if(mazePosition[row-1][column] == 1) {
-            // ie. 34right.
-            visitedIntersections.push(row+ "" +column+ "up");
-            positions.push(new int[] {row, column});
-            directions.push(W);
-        }
-        if(mazePosition[row+1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "down")) {
-            visitedIntersections.push(row+ "" +column+ "down");
-            positions.push(new int[] {row, column});
-            directions.push(E);
-        }
-        if(mazePosition[row][column-1] == 1 && !visitedIntersections.contains(row+ "" +column+ "left")) {
-            visitedIntersections.push(row+ "" +column+ "left");
-            positions.push(new int[] {row, column});
-            directions.push(S);
-        }
-        if(mazePosition[row][column+1] == 1 && !visitedIntersections.contains(row+ "" +column+ "right")) {
-            visitedIntersections.push(row+ "" +column+ "right");
-            positions.push(new int[] {row, column});
-            directions.push(N);
-        }
+        checkPathsAtIntersection(mazePosition, "left&right", row, column);
+        checkPathsAtIntersection(mazePosition, "up&down", row, column);
 
         while(!exitFound) {
             // re-assign variables every time a dead end is found
@@ -196,12 +177,12 @@ public class Question10 {
         if(direction.equals("up&down")) {
             if(mazePosition[row-1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "up")) {
                 // ie. 34right.
-                visitedIntersections.push(row+ "" +column+ "up");
+                visitedIntersections.add(row+ "" +column+ "up");
                 positions.push(new int[] {row, column});
                 directions.push(N);
             }
             if(mazePosition[row+1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "down")) {
-                visitedIntersections.push(row+ "" +column+ "down");
+                visitedIntersections.add(row+ "" +column+ "down");
                 positions.push(new int[] {row, column});
                 directions.push(S);
             }
@@ -209,12 +190,12 @@ public class Question10 {
         // this checks for paths on the left or right of the user's position
         else {
             if(mazePosition[row][column-1] == 1 && !visitedIntersections.contains(row+ "" +column+ "left")) {
-                visitedIntersections.push(row+ "" +column+ "left");
+                visitedIntersections.add(row+ "" +column+ "left");
                 positions.push(new int[] {row, column});
                 directions.push(W);
             }
             if(mazePosition[row][column+1] == 1 && !visitedIntersections.contains(row+ "" +column+ "right")) {
-                visitedIntersections.push(row+ "" +column+ "right");
+                visitedIntersections.add(row+ "" +column+ "right");
                 positions.push(new int[] {row, column});
                 directions.push(E);
             }
