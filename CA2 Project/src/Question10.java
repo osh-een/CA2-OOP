@@ -1,7 +1,6 @@
 import java.util.*;
 
-// Bug in code: If an intersection happens to be at end of path, the paths will be checked twice at that intersection
-// Plus have to manually give starting directions and position otherwise code breaks
+// Bug for mazes with loops: Some paths may be checked twice
 
 public class Question10 {
 
@@ -100,9 +99,6 @@ public class Question10 {
         while(!done && !exitFound) {
             attempts++;
 
-            System.out.println("ATTEMPT #" +attempts);
-            outputMaze(row, column);
-
             // moving left
             if(directionToMove.equals("left")) {
                 if(mazePosition[row][column-1] == 0) {
@@ -122,8 +118,11 @@ public class Question10 {
                 }
             }
 
+            System.out.println("ATTEMPT #" +attempts);
+            outputMaze(row, column, mazePosition);
+
             // checks to see if column is equal to either max or min bound of the array. This means we found exit
-            if(column <= 0 || column >= mazePosition[0].length - 1) {
+            if(mazePosition[row][column] == 2) {
                 System.out.println("Exit found in " +attempts+ " attempts!\n");
                 exitFound = true;
             }
@@ -138,9 +137,6 @@ public class Question10 {
 
         while(!done && !exitFound) {
             attempts++;
-
-            System.out.println("ATTEMPT #" +attempts);
-            outputMaze(row, column);
 
             // moving up
             if(directionToMove.equals("up")) {
@@ -161,8 +157,11 @@ public class Question10 {
                 }
             }
 
+            System.out.println("ATTEMPT #" +attempts);
+            outputMaze(row, column, mazePosition);
+
             // checks to see if column is equal to either max or min bound of the array. This means we found exit
-            if(row <= 0 || row >= mazePosition[0].length - 1) {
+            if(mazePosition[row][column] == 2) {
                 System.out.println("Exit found in " +attempts+ " attempts!\n");
                 exitFound = true;
             }
@@ -207,7 +206,7 @@ public class Question10 {
                 {0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 1, 1, 1, 1, 1, 1, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0},
-                {1, 1, 1, 1, 1, 1, 1, 0},
+                {2, 1, 1, 1, 1, 1, 1, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0},
                 {0, 1, 1, 1, 1, 0, 0, 0},
                 {0, 0, 0, 0, 1, 0, 0, 0},
@@ -220,7 +219,7 @@ public class Question10 {
                 {0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 1, 1, 1, 1, 1, 1, 0},
                 {0, 0, 1, 0, 0, 0, 1, 0},
-                {1, 1, 1, 0, 0, 0, 1, 0},
+                {2, 1, 1, 0, 0, 0, 1, 0},
                 {0, 0, 1, 0, 0, 0, 1, 0},
                 {0, 0, 1, 0, 0, 0, 1, 0},
                 {0, 1, 1, 1, 1, 1, 1, 0},
@@ -242,9 +241,7 @@ public class Question10 {
     }
 
     // parameters act as a way to keep track where the user is moving
-    public static void outputMaze(int startingRow, int startingColumn) {
-        int[][] maze = createPDFMaze();
-
+    public static void outputMaze(int startingRow, int startingColumn, int[][] maze) {
         for(int i = 0; i < maze.length; i++) {
             if(i != 0)  {
                 System.out.println();
