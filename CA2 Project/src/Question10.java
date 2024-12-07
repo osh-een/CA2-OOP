@@ -121,7 +121,7 @@ public class Question10 {
             System.out.println("ATTEMPT #" +attempts);
             outputMaze(row, column, mazePosition);
 
-            // checks to see if column is equal to either max or min bound of the array. This means we found exit
+            // if the current position has a value of 2, the exit is found
             if(mazePosition[row][column] == 2) {
                 System.out.println("Exit found in " +attempts+ " attempts!\n");
                 exitFound = true;
@@ -160,7 +160,7 @@ public class Question10 {
             System.out.println("ATTEMPT #" +attempts);
             outputMaze(row, column, mazePosition);
 
-            // checks to see if column is equal to either max or min bound of the array. This means we found exit
+            // if the current position has a value of 2, the exit is found
             if(mazePosition[row][column] == 2) {
                 System.out.println("Exit found in " +attempts+ " attempts!\n");
                 exitFound = true;
