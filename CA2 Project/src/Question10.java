@@ -39,22 +39,52 @@ public class Question10 {
     public static void mazeMenu() {
         Deque<int[]> positions = new ArrayDeque<>();
         Deque<String> directions = new ArrayDeque<>();
-        int row = 6, column = 2;
         int[][] mazePosition = createPDFMaze();
+        int row = 0, column = 0;
+
+        boolean done = false;
+        while(!done) {
+            System.out.println("Please enter the row you would like to start at (0-7)");
+            row = UtilityClass.validateRange(0, 7);
+
+            System.out.println("Please enter the column you would like to start at");
+            column = UtilityClass.validateRange(0, 7);
+
+            if(mazePosition[row][column] == 1) {
+                System.out.println("You are starting at position [" +row+ ", " +column+ "]. Navigating the maze...");
+                done = true;
+            }
+            else {
+                System.out.println("Invalid position! You must choose a position on a path.");
+            }
+        }
 
         // to avoid pushing paths twice from an intersection that happens to be at a dead end
         Deque<String> visitedIntersections = new ArrayDeque<>();
 
-        // Push all possible paths from the starting position
-        if(!visitedIntersections.contains(row+ "" +column+ "up")) {
+        positions.push(new int[]{row, column});
+
+        // checking for all possible paths from the user's starting position
+        if(mazePosition[row-1][column] == 1) {
+            // ie. 34right.
             visitedIntersections.push(row+ "" +column+ "up");
-            positions.push(new int[]{row, column});
-            directions.push(N);
+            positions.push(new int[] {row, column});
+            directions.push(W);
         }
-        if(!visitedIntersections.contains(row+ "" +column+ "right")) {
-            visitedIntersections.push(row+ "" +column+ "right");
-            positions.push(new int[]{row, column});
+        if(mazePosition[row+1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "down")) {
+            visitedIntersections.push(row+ "" +column+ "down");
+            positions.push(new int[] {row, column});
             directions.push(E);
+        }
+        if(mazePosition[row][column-1] == 1 && !visitedIntersections.contains(row+ "" +column+ "left")) {
+            visitedIntersections.push(row+ "" +column+ "left");
+            positions.push(new int[] {row, column});
+            directions.push(S);
+        }
+        if(mazePosition[row][column+1] == 1 && !visitedIntersections.contains(row+ "" +column+ "right")) {
+            visitedIntersections.push(row+ "" +column+ "right");
+            positions.push(new int[] {row, column});
+            directions.push(N);
         }
 
         while(!exitFound) {
