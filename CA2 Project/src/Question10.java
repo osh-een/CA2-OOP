@@ -1,7 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 // Bug in code: If an intersection happens to be at end of path, the paths will be checked twice at that intersection
 // Plus have to manually give starting directions and position otherwise code breaks
@@ -9,8 +6,14 @@ import java.util.Map;
 public class Question10 {
 
     static String N = "up", E = "right", S = "down", W = "left";
+
     static boolean exitFound = false;
     static int attempts = 0;
+
+    static Deque<int[]> positions = new ArrayDeque<>();
+    static Deque<String> directions = new ArrayDeque<>();
+    // to avoid pushing paths twice from an intersection that happens to be at a dead end
+    static Deque<String> visitedIntersections = new ArrayDeque<>();
 
     public static void main(String[] args) {
         System.out.println("BACKTRACKING ALGORITHM");
@@ -37,8 +40,6 @@ public class Question10 {
     }
 
     public static void mazeMenu() {
-        Deque<int[]> positions = new ArrayDeque<>();
-        Deque<String> directions = new ArrayDeque<>();
         int[][] mazePosition = createPDFMaze();
         int row = 0, column = 0;
 
@@ -58,9 +59,6 @@ public class Question10 {
                 System.out.println("Invalid position! You must choose a position on a path.");
             }
         }
-
-        // to avoid pushing paths twice from an intersection that happens to be at a dead end
-        Deque<String> visitedIntersections = new ArrayDeque<>();
 
         positions.push(new int[]{row, column});
 
@@ -105,17 +103,17 @@ public class Question10 {
             column = newRowAndColumn[1];
 
             if(directionToMove.equals("left") || directionToMove.equals("right")) {
-                handleLeftRightMovement(directionToMove, row, column, mazePosition, positions, directions, visitedIntersections);
+                handleLeftRightMovement(directionToMove, row, column, mazePosition);
             }
             else {
-                handleUpDownMovement(directionToMove, row, column, mazePosition, positions, directions, visitedIntersections);
+                handleUpDownMovement(directionToMove, row, column, mazePosition);
             }
         }
 
         menuOptions();
     }
 
-    public static void handleLeftRightMovement(String directionToMove, int row, int column, int[][] mazePosition, Deque<int[]> positions, Deque<String> directions, Deque<String> visitedIntersections) {
+    public static void handleLeftRightMovement(String directionToMove, int row, int column, int[][] mazePosition) {
         boolean done = false;
 
         while(!done && !exitFound) {
@@ -150,21 +148,11 @@ public class Question10 {
             }
 
             // as we're moving along, check if there are any paths along the way and only push it if it's not already in vistedIntersections
-            if(mazePosition[row-1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "up")) {
-                // ie. 34right.
-                visitedIntersections.push(row+ "" +column+ "up");
-                positions.push(new int[] {row, column});
-                directions.push(N);
-            }
-            if(mazePosition[row+1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "down")) {
-                visitedIntersections.push(row+ "" +column+ "down");
-                positions.push(new int[] {row, column});
-                directions.push(S);
-            }
+            checkPathsAtIntersection(mazePosition, "up&down", row, column);
         }
     }
 
-    public static void handleUpDownMovement(String directionToMove, int row, int column, int[][] mazePosition, Deque<int[]> positions, Deque<String> directions, Deque<String> visitedIntersections) {
+    public static void handleUpDownMovement(String directionToMove, int row, int column, int[][] mazePosition) {
         boolean done = false;
 
         while(!done && !exitFound) {
@@ -199,6 +187,27 @@ public class Question10 {
             }
 
             // as we're moving along, check if there are any paths along the way
+            checkPathsAtIntersection(mazePosition, "left&right", row, column);
+        }
+    }
+
+    public static void checkPathsAtIntersection(int[][] mazePosition, String direction, int row, int column) {
+        // this checks for paths below or above the user's position
+        if(direction.equals("up&down")) {
+            if(mazePosition[row-1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "up")) {
+                // ie. 34right.
+                visitedIntersections.push(row+ "" +column+ "up");
+                positions.push(new int[] {row, column});
+                directions.push(N);
+            }
+            if(mazePosition[row+1][column] == 1 && !visitedIntersections.contains(row+ "" +column+ "down")) {
+                visitedIntersections.push(row+ "" +column+ "down");
+                positions.push(new int[] {row, column});
+                directions.push(S);
+            }
+        }
+        // this checks for paths on the left or right of the user's position
+        else {
             if(mazePosition[row][column-1] == 1 && !visitedIntersections.contains(row+ "" +column+ "left")) {
                 visitedIntersections.push(row+ "" +column+ "left");
                 positions.push(new int[] {row, column});
