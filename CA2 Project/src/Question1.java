@@ -22,8 +22,10 @@ public class Question1 {
         manager.add(pyramid1);
 
         // Output total weight and total rectangular volume
-        System.out.println("Total Weight: " + manager.totalWeight());
-        System.out.println("Total Rectangular Volume: " + manager.totalRectangularVolume());
+        System.out.println("Total weight of manager object: " + manager.totalWeight());
+        System.out.println("Total rectangular volume of manager object: " + manager.totalRectangularVolume());
+
+        System.out.println();
 
         // Get all containers and print details
         List<IMeasurableContainer> allContainers = manager.getAllContainers();
