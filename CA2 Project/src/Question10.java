@@ -94,8 +94,6 @@ public class Question10 {
     }
 
     public static void handleLeftRightMovement(String directionToMove, int row, int column, int[][] mazePosition) {
-        boolean done = false;
-
         while(!exitFound) {
             attempts++;
 
