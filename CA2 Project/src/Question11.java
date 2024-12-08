@@ -9,6 +9,7 @@ import java.util.*;
 
 // Bugs/Errors/Functionality not added:
     // 1. If there are two paths with the same distance, errors happen ie. Pueblo to Pittsburgh outputs 12
+        // FIXED: Lazily though. Just swapped Peoria and Phoenix around just so Peoria is checked first
     // 2. Can't backtrack ie. Princeton to Pendleton
     // 3. Can't display map of the cities and their connections
 
@@ -52,13 +53,14 @@ public class Question11 {
         System.out.println("Where would you like to travel to?");
         String destination = validateCity();
 
-        // no matter what, cities with the shortest distance will always be first in the queue
+        // no matter what, cities with the shortest distance will always be first in the queue because of comparator implemented
         PriorityQueue<DistanceTo> distances = new PriorityQueue<>(new DistanceComparator());
         Map<String, Integer> shortestKnownDistances = new HashMap<>();
 
         distances.add(new DistanceTo(location, 0));
 
         while(!distances.isEmpty()) {
+            // will always remove the shortest distance first or remove whatever came into the queue first if distances are the same
             DistanceTo currentDistanceTo = distances.remove();
             String currentCity = currentDistanceTo.getTarget();
             int shortestCurrentDistance = currentDistanceTo.getDistance();
@@ -79,8 +81,8 @@ public class Question11 {
 
                 int newDistance = shortestCurrentDistance + neighbourDistance;
 
-                // only add it to PriorityQueue if the city is not yet in Map or if newDistance is shorter than distance of current neighbour city
-                if (!shortestKnownDistances.containsKey(neighbourCity) || newDistance < shortestKnownDistances.get(neighbourCity)) {
+                // only add it to PriorityQueue if the city is not yet in the PriorirtyQueue. Shortest distance will come up on top
+                if (!shortestKnownDistances.containsKey(neighbourCity)) {
                     distances.add(new DistanceTo(neighbourCity, newDistance));
                 }
             }
