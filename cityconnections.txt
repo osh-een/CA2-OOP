@@ -2,8 +2,8 @@ Pendleton   Pierre  2
 Pendleton   Pueblo  8
 Pendleton   Phoenix 4
 Pierre  Pueblo  3
-Pueblo  Phoenix 3
 Pueblo  Peoria  3
+Pueblo  Phoenix 3
 Phoenix Peoria  4
 Phoenix Pittsburgh  10
 Phoenix Pensacola   5
