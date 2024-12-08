@@ -11,6 +11,7 @@ import java.util.*;
     // 1. If there are two paths with the same distance, errors happen ie. Pueblo to Pittsburgh outputs 12
         // FIXED: Lazily though. Just swapped Peoria and Phoenix around just so Peoria is checked first
     // 2. Can't backtrack ie. Princeton to Pendleton
+        // DONE: Left to right routes added first before right to left directions
     // 3. Can't display map of the cities and their connections
 
 public class Question11 {
@@ -81,7 +82,7 @@ public class Question11 {
 
                 int newDistance = shortestCurrentDistance + neighbourDistance;
 
-                // only add it to PriorityQueue if the city is not yet in the PriorirtyQueue. Shortest distance will come up on top
+                // only add it to PriorityQueue if the city is not yet in the PriorityQueue. Shortest distance will come up on top
                 if (!shortestKnownDistances.containsKey(neighbourCity)) {
                     distances.add(new DistanceTo(neighbourCity, newDistance));
                 }
