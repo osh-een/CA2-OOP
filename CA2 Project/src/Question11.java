@@ -61,7 +61,7 @@ public class Question11 {
         System.out.println("Where would you like to travel to?");
         String destination = validateCity();
 
-        // no matter what, cities with the shortest distance will always be first in the queue because of comparator implemented
+        // no matter what, cities with the shortest distance will always be first in the queue
         PriorityQueue<DistanceTo> distances = new PriorityQueue<>();
         Map<String, Integer> shortestKnownDistances = new HashMap<>();
 
