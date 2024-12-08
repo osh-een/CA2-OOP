@@ -22,6 +22,6 @@ public class DistanceTo implements Comparable<DistanceTo> {
 
     @Override
     public String toString() {
-        return "[target=" + target + ", distance=" + distance + "]";
+        return "(" +target+ ". Total distance travelled will be: " + distance + "km)";
     }
 }
