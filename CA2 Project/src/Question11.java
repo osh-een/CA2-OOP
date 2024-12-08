@@ -55,38 +55,50 @@ public class Question11 {
         String destination = validateCity();
 
         // no matter what, cities with the shortest distance will always be first in the queue because of comparator implemented
-        PriorityQueue<DistanceTo> distances = new PriorityQueue<>(new DistanceComparator());
+        PriorityQueue<DistanceTo> distances = new PriorityQueue<>();
         Map<String, Integer> shortestKnownDistances = new HashMap<>();
 
         distances.add(new DistanceTo(location, 0));
 
         while(!distances.isEmpty()) {
-            // will always remove the shortest distance first or remove whatever came into the queue first if distances are the same
+            // will always remove the shortest distance to a city first or remove whatever came into the queue first if distances are the same
             DistanceTo currentDistanceTo = distances.remove();
+
             String currentCity = currentDistanceTo.getTarget();
             int shortestCurrentDistance = currentDistanceTo.getDistance();
+
+            if(currentCity.equalsIgnoreCase(location)) {
+                System.out.println("\nYou are currently at your location (" +currentCity+ "). You have not travelled yet");
+            }
+            else {
+                System.out.println("Travelling to " +currentCity);
+            }
 
             // puts top element of PriorityQueue as shortest getDistance() have priority
             shortestKnownDistances.put(currentCity, shortestCurrentDistance);
 
             // break the code if we're at the intended city (destination)
             if(currentCity.equals(destination)) {
-                System.out.println("The shortest distance from " +location+ " to " +destination+ " is " +shortestCurrentDistance+ ". Returning to main menu...\n");
+                System.out.println("\nThe shortest distance from " +location+ " to " +destination+ " is " +shortestCurrentDistance+ "km. Returning to main menu...\n");
                 menuOptions();
             }
 
             // gets all the cities that are connected to the currentCity. For loop of the tree set with the key of currentCity
+            System.out.println("All possible connections from " +currentCity+ ":");
             for(DistanceTo connectedCity : connectionsMap.get(currentCity)) {
                 String neighbourCity = connectedCity.getTarget();
                 int neighbourDistance = connectedCity.getDistance();
 
+                System.out.println("\t- " +neighbourCity+ ", " +neighbourDistance+ "km away");
+
                 int newDistance = shortestCurrentDistance + neighbourDistance;
 
-                // only add it to PriorityQueue if the city is not yet in the PriorityQueue. Shortest distance will come up on top
+                // only add it to PriorityQueue if the city is not yet in the PriorityQueue to avoid going back same route. Shortest distance will come up on top
                 if (!shortestKnownDistances.containsKey(neighbourCity)) {
                     distances.add(new DistanceTo(neighbourCity, newDistance));
                 }
             }
+            System.out.println(distances+ "\n");
         }
     }
 
