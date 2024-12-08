@@ -16,8 +16,16 @@ public class DistanceTo implements Comparable<DistanceTo> {
     }
 
     @Override
+    // changed so that duplicate distances are not left out.
     public int compareTo(DistanceTo other) {
-        return distance - other.distance;
+        int distanceComparison = Integer.compare(this.distance, other.distance);
+
+        // if they are the same distance, compare the city names instead and only remove if city names are also the same
+        if(distanceComparison == 0) {
+            return this.target.compareTo(other.target); // Compare target names if distances are equal
+        }
+
+        return distanceComparison;
     }
 
     @Override
