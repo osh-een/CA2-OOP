@@ -68,7 +68,7 @@ public class Question11 {
         distances.add(new DistanceTo(location, 0));
 
         while(!distances.isEmpty()) {
-            // will always remove the shortest distance to a city first or remove whatever came into the queue first if distances are the same
+            // will always remove the shortest distance to a city first
             DistanceTo currentDistanceTo = distances.remove();
 
             String currentCity = currentDistanceTo.getTarget();
@@ -76,11 +76,11 @@ public class Question11 {
 
             if (currentCity.equalsIgnoreCase(location)) {
                 System.out.println("\nYou are currently at your location (" + currentCity + "). You have not travelled yet");
-            } else {
-                System.out.println("Travelling to " + currentCity);
+            }
+            else {
+                System.out.println("Travelling to " +currentCity+ ". Travelled total of " +shortestCurrentDistance+ "km");
             }
 
-            // puts top element of PriorityQueue as shortest getDistance() have priority
             shortestKnownDistances.put(currentCity, shortestCurrentDistance);
 
             // break the code if we're at the intended city (destination)
@@ -99,7 +99,7 @@ public class Question11 {
 
                 int newDistance = shortestCurrentDistance + neighbourDistance;
 
-                // only add it to PriorityQueue if the city is not yet in the PriorityQueue to avoid going back same route. Shortest distance will come up on top
+                // only add it to PriorityQueue if the city is not yet in the Map to avoid going back same route. Just makes things faster
                 if (!shortestKnownDistances.containsKey(neighbourCity)) {
                     distances.add(new DistanceTo(neighbourCity, newDistance));
                 }
