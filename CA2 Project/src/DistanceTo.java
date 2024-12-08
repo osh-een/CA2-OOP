@@ -22,10 +22,11 @@ public class DistanceTo implements Comparable<DistanceTo> {
 
         // if they are the same distance, compare the city names instead and only remove if city names are also the same
         if(distanceComparison == 0) {
-            return this.target.compareTo(other.target); // Compare target names if distances are equal
+            return other.target.compareTo(this.target);
         }
-
-        return distanceComparison;
+        else {
+            return distanceComparison;
+        }
     }
 
     @Override
