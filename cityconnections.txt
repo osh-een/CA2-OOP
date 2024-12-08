@@ -19,5 +19,6 @@ Pittsburgh  Phoenix 10
 Peoria  Pueblo  3
 Peoria  Phoenix 4
 Phoenix Pendleton   4
+Pueblo  Pierre  3
 Pueblo  Pendleton   8
 Pierre  Pendleton   2
